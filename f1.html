@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+	<ul>
+		<li>1aa</li>
+		<li>2bb</li>
+		<li>3cc</li>
+		<li>4dd</li>
+		<li>5ee</li>
+		<li>6ss</li>
+		<li>7aa</li>
+		<li>8rr</li>
+	</ul>
+</body>
+<script>
+	let qs = (qsValue) => {
+		let isOnly = document.querySelectorAll(qsValue);
+		let result;
+		isOnly.length == 1 ?
+			result = document.querySelector(qsValue) :
+			result = isOnly;
+		return result
+	};
+
+	let C$el = (elValue) => {
+		result = document.createElement(elValue);
+		return result;
+	}
+
+
+	const elementClassMaker = (addClassF, el, className) => {
+		result = addClassF(el, className)
+		return result
+	};
+	const addClassF = (elements, className) => {
+		let result = []
+		if (elements.length == undefined) {
+			elements.classList.add(className)
+			result.push(elements);
+			return result;
+		};
+		for (const element of elements) {
+			element.classList.add(className)
+			result.push(element);
+		}
+		return result;
+	};
+
+	let listNameTest = addClassF(C$el('li'), 'ddd');
+
+
+	//클릭한 엘리먼트 인덱스 찾아줌
+	let clickChecker = (event) => {
+		let target = event.target; //누른 타겟
+		let targetParent = target.parentElement; //누른 타겟의 부모요소
+		target.classList.add('clickChecker-maker'); //누른 타겟 마킹
+		let isTargetList = targetParent.children; //부모요소의 자식요소 콜렉션
+		let isTarget = isTargetList[0]; //첫번쨰 인덱스 자식요소 셋팅
+		console.log(isTargetList)
+		let result; //결과값담을 변수
+		let index = 0; //초기 검사 인덱스
+		for (const el of isTargetList) {
+			//마킹한 클레스 확인
+			if (el.classList.contains('clickChecker-maker')) { //마킹한 클레스인경우 현제 인덱스 저장
+				result = index;
+				target.classList.remove('clickChecker-maker') //마킹 클레스 제거
+				return result; //결과값 리턴
+			} else {
+				isTarget = isTargetList.nextelementsibling; //아닌경우 타겟은 다음 인덱스로 변경
+				index = index + 1; //아닌경우 타겟은 다음 인덱스로 변경
+			}
+		}
+
+		console.log(result)
+
+	};
+	let liTest = qs('ul');
+
+	liTest.addEventListener('click', clickChecker);
+</script>
+
+</html>

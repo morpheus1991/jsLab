@@ -1,0 +1,35 @@
+{
+	// 코딩 컨벤션 기본 설정
+	"editor.tabSize": 2,
+	"editor.insertSpaces": false,
+	"editor.detectIndentation": false,
+	"editor.formatOnSave": true,
+
+	"[scss]": {
+		"editor.tabSize": 2,
+		"editor.insertSpaces": true,
+		"editor.detectIndentation": true,
+		"editor.formatOnSave": true,
+	},
+	"liveSassCompile.settings.formats": [{
+		"format": "expanded",
+		"extensionName": ".css",
+		"savePath": "~/../css/"
+		// ~ 를 기준으로 생성됨
+	}],
+	"liveSassCompile.settings.excludeList": [
+		//라이브사스 컴파일 제외목록임
+		"**/node_modules/**",
+		".vscode/**"
+		//해당 폴더 하위 모든것
+	],
+	"liveSassCompile.settings.generateMap": true,
+	// map파일 생성 여부 (브라우저 개발자도구 디버깅과 관련)
+	"liveSassCompile.settings.autoprefix": [
+		"> 1%",
+		//브라우저 유저 1퍼센트 이상인경우
+		"last 2 versions"
+		//최신버젼으로부터 2버전이상
+	],
+	"liveServer.settings.port": 5501,
+}
