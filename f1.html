@@ -34,12 +34,52 @@
 		<li><a href="#">6ss</a></li>
 		<li><a href="#">7aa</a></li>
 		<li><a href="#">8rr</a></li>
+		<li><a href="#">1aa</a></li>
+		<li><a href="#">2bb</a></li>
+		<li><a href="#">3cc</a></li>
+		<li><a href="#">4dd</a></li>
+		<li><a href="#">5ee</a></li>
+		<li><a href="#">6ss</a></li>
+		<li><a href="#">7aa</a></li>
+		<li><a href="#">8rr</a></li>
+		<li><a href="#">1aa</a></li>
+		<li><a href="#">2bb</a></li>
+		<li><a href="#">3cc</a></li>
+		<li><a href="#">4dd</a></li>
+		<li><a href="#">5ee</a></li>
+		<li><a href="#">6ss</a></li>
+		<li><a href="#">7aa</a></li>
+		<li><a href="#">8rr</a></li>
+		<li><a href="#">1aa</a></li>
+		<li><a href="#">2bb</a></li>
+		<li><a href="#">3cc</a></li>
+		<li><a href="#">4dd</a></li>
+		<li><a href="#">5ee</a></li>
+		<li><a href="#">6ss</a></li>
+		<li><a href="#">7aa</a></li>
+		<li><a href="#">8rr</a></li>
+		<li><a href="#">1aa</a></li>
+		<li><a href="#">2bb</a></li>
+		<li><a href="#">3cc</a></li>
+		<li><a href="#">4dd</a></li>
+		<li><a href="#">5ee</a></li>
+		<li><a href="#">6ss</a></li>
+		<li><a href="#">7aa</a></li>
+		<li><a href="#">8rr</a></li>
 	</ul>
+	<strong>ddd</strong>
+
+	<h2 id="id111" class="c1 c2 c3 c4">
+		<div>
+			<span>sa</span>
+		</div>
+	</h2>
 
 	<p class="delete-text">지워졌습니다.</p>
 	<script src="/devState.js"></script>
 	<script src="/function_basic.js"></script>
 	<script>
+		let scrollPercent;
 		//쿼리셀렉터
 		let qs = (qsValue) => {
 			let that = document.querySelectorAll(qsValue);
@@ -63,17 +103,22 @@
 			};
 		};
 		// 에드클레스
-		const addClass = (el) => {
-			el.classList.add('on');
+		const addClass = (el, className = false) => {
+			className ?
+				el.classList.add(className) :
+				el.classList.add('on');
 		};
 		// 리무브클레스
-		const removeClass = (el) => {
-			el.classList.remove('on');
+		const removeClass = (el, className = false) => {
+			className ?
+				el.classList.remove(className) :
+				el.classList.remove('on')
 		};
 
 
 		//on 토글
 		const toggleClass = (el) => {
+			console.log(el)
 			el.classList.toggle('on');
 		};
 		//동일 형제들의 on 제거 후 on 토글
@@ -136,6 +181,7 @@
 				return findtarget
 			}
 			while (!(elTagName == findtarget.tagName)) {
+				// console.log(findtarget.tagName)
 				findtarget = findtarget.parentElement;
 			}
 			return findtarget;
@@ -148,8 +194,9 @@
 			});
 		}
 
+		// addEvent(list, 'click', toggleClass)
 		// addEvent(list, 'click', cleanSelfToggleClass)
-		addEvent(list, 'click', cleanSelfToggleClass)
+		// addEvent(list, 'click', cleanToggleClass)
 
 		const thisIndex = (el, event) => {
 			console.log(el)
@@ -199,8 +246,84 @@
 			console.log(result)
 		}
 
-		//클릭하면 해당 클레스에 addclass;
 
+		const docmentScrollTop = (el, f, className = false) => {
+			window.addEventListener('scroll', () => {
+				let currentScroll = scrollPercent;
+				if (currentScroll == 0) {
+					if (className) {
+						f(el, className)
+					}
+					f(el)
+				}
+			})
+		}
+
+
+		const docmentScrollBottom = (el, f, className = false) => {
+			window.addEventListener('scroll', () => {
+				// let scrollHeight = qs('body').getBoundingClientRect.top
+				let currentScroll = scrollPercent;
+				if (currentScroll <= 100) {
+					if (className) {
+						f(el, className)
+					}
+					f(el)
+				}
+			})
+		}
+
+		window.addEventListener('scroll', (event) => {
+			let currentScroll = window.scrollY;
+			let height = (qs('html').scrollHeight) - (window.innerHeight)
+			let percent = ((currentScroll / height) * 100);
+			let roundPercent = Math.round(percent);
+			scrollPercent = percent;
+			roundPercent == 0 ?
+				addClass(qs('body'), 'scorll-top') : removeClass(qs('body'), 'scorll-top');
+			roundPercent == 100 ?
+				addClass(qs('body'), 'scorll-bottom') : removeClass(qs('body'), 'scorll-bottom');
+		})
+
+
+
+		//클릭하면 해당 클레스에 addclass;
+		const findClass = (el) => {
+			res = el.getAttribute('class');
+			return res;
+		};
+		const findId = (el) => {
+			res = el.getAttribute('id');
+			return res;
+		};
+
+		const changeEl = (nowEl, changeEl) => {
+			console.log(nowEl)
+			let CreatEl = createEl(changeEl);
+			let FindClass = findClass(nowEl);
+			let FindClassArry = FindClass.split(' ')
+			let FindId = findId(nowEl);
+			let inner = nowEl.innerHTML;
+			console.log(inner)
+			CreatEl.innerHTML = inner;
+			let parentEl = nowEl.parentElement;
+			if (1 < FindClassArry.length) {
+				for (let i = 0; i < FindClassArry.length; i++) {
+					CreatEl.classList.add(`${FindClassArry[i]}`);
+				};
+			};
+			if (FindId) {
+				CreatEl.setAttribute('id', FindId)
+			};
+			parentEl.insertBefore(CreatEl, nowEl)
+			nowEl.parentElement.removeChild(nowEl);
+			return CreatEl
+		};
+		changeEl(qs('h2'), 'h4');
+
+		let togglessss = () => toggleClass(qs('strong'));
+		let interval = setInterval(togglessss, 100);
+		clearInterval(interval)
 
 		// const clickedIndexElementAddClass =
 		//클릭한 ul
