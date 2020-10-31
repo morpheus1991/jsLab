@@ -11,10 +11,17 @@
 		"editor.detectIndentation": true,
 		"editor.formatOnSave": true,
 	},
+		"[javascript]": {
+		"editor.tabSize": 2,
+		"editor.insertSpaces": true,
+		"editor.detectIndentation": true,
+		"editor.formatOnSave": true,
+	},
+
 	"liveSassCompile.settings.formats": [{
 		"format": "expanded",
 		"extensionName": ".css",
-		"savePath": "~/../css/"
+		"savePath": "~/css/"
 		// ~ 를 기준으로 생성됨
 	}],
 	"liveSassCompile.settings.excludeList": [

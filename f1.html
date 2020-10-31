@@ -7,19 +7,7 @@
 	<title>Document</title>
 	<link rel="stylesheet" href="/css/style.css">
 	<style>
-		li {
-			width: 20%;
-			background: red;
-			text-align: center;
-			margin: 8px;
-		}
 
-		a {
-			background: yellow;
-			color: #000;
-			display: inline-block;
-			padding: 20px;
-		}
 	</style>
 </head>
 
@@ -31,8 +19,16 @@
 		<li><a href="#">3cc</a></li>
 		<li><a href="#">4dd</a></li>
 		<li><a href="#">5ee</a></li>
-		<li><a href="#">6ss</a></li>
+		<li class="scroll3"><a href="#">6ss</a></li>
 		<li><a href="#">7aa</a></li>
+		<li><a href="#">8rr</a></li>
+		<li><a href="#">1aa</a></li>
+		<li><a href="#">2bb</a></li>
+		<li><a href="#">3cc</a></li>
+		<li><a href="#">4dd</a></li>
+		<li><a href="#">5ee</a></li>
+		<li><a href="#">6ss</a></li>
+		<li class="scroll1"><a href="#">7aa</a></li>
 		<li><a href="#">8rr</a></li>
 		<li><a href="#">1aa</a></li>
 		<li><a href="#">2bb</a></li>
@@ -47,21 +43,13 @@
 		<li><a href="#">3cc</a></li>
 		<li><a href="#">4dd</a></li>
 		<li><a href="#">5ee</a></li>
-		<li><a href="#">6ss</a></li>
+		<li class="scroll2"><a href="#">6ss</a></li>
 		<li><a href="#">7aa</a></li>
 		<li><a href="#">8rr</a></li>
 		<li><a href="#">1aa</a></li>
 		<li><a href="#">2bb</a></li>
 		<li><a href="#">3cc</a></li>
-		<li><a href="#">4dd</a></li>
-		<li><a href="#">5ee</a></li>
-		<li><a href="#">6ss</a></li>
-		<li><a href="#">7aa</a></li>
-		<li><a href="#">8rr</a></li>
-		<li><a href="#">1aa</a></li>
-		<li><a href="#">2bb</a></li>
-		<li><a href="#">3cc</a></li>
-		<li><a href="#">4dd</a></li>
+		<li class="scroll0"><a href="#">6ss</a></li>
 		<li><a href="#">5ee</a></li>
 		<li><a href="#">6ss</a></li>
 		<li><a href="#">7aa</a></li>
@@ -77,253 +65,29 @@
 
 	<p class="delete-text">지워졌습니다.</p>
 	<script src="/devState.js"></script>
-	<script src="/function_basic.js"></script>
+	<script script src="/domFxBasic.js"></script>
 	<script>
-		let scrollPercent;
-		//쿼리셀렉터
-		let qs = (qsValue) => {
-			let that = document.querySelectorAll(qsValue);
-			let res;
-			that.length == 1 ?
-				res = document.querySelector(qsValue) :
-				res = that;
-			return res
-		};
-
-		//엘리면트 생성
-		let createEl = (elValue) => {
-			res = document.createElement(elValue);
-			return res;
-		}
-
-		//루프 돌릴때 사용
-		const looper = (el, f) => {
-			for (let i = 0; i < el.length; i++) {
-				f(el[i])
-			};
-		};
-		// 에드클레스
-		const addClass = (el, className = false) => {
-			className ?
-				el.classList.add(className) :
-				el.classList.add('on');
-		};
-		// 리무브클레스
-		const removeClass = (el, className = false) => {
-			className ?
-				el.classList.remove(className) :
-				el.classList.remove('on')
-		};
-
-
-		//on 토글
-		const toggleClass = (el) => {
-			console.log(el)
-			el.classList.toggle('on');
-		};
-		//동일 형제들의 on 제거 후 on 토글
-		const cleanToggleClass = (el) => {
-			if (el.parentElement) {
-				parentEl = el.parentElement;
-				looper(parentEl.children, removeClass)
-			}
-			el.classList.toggle('on');
-		};
-		// 더 엄격한 토글(자기자신 on도 삭제)
-		const cleanSelfToggleClass = (el, event) => {
-			let selectedIndex = thisIndex(el);
-			let hasOnIndex = hasOnCalssIndex(el);
-			console.log(`선택한 클레스는 ${selectedIndex}, on가진놈은${hasOnIndex}`)
-			console.log(selectedIndex)
-			if (el.parentElement) {
-				parentEl = el.parentElement;
-				looper(parentEl.children, removeClass)
-			}
-			el.classList.toggle('on');
-			if (selectedIndex == hasOnIndex) {
-				el.classList.remove('on');
-			}
-		};
-
-
-		const list = qs('li');
-		const listt = document.querySelector('li');
-
-		//event.delegation
-		//list-box라는 클레스를 가진 ul,ol 등의 리스트 box를 찾아서 반환
-		const listBoxFinder = (el) => {
-			let identiti = null;
-			let parent = el.parentElement;
-			if (1 < el.length) {
-				identiti = el[0].tagName; //인접한 형제가 있으므로 태그네임이 구분자
-				parent = el[0].parentElement; //부모요소를 따둠, 앞으로 바뀔 예정
-			}
-			while (!parent.classList.contains('list-box')) {
-				parent = parent.parentElement;
-				if (parent.tagName == 'BODY') {
-					return;
-				};
-			};
-			return parent;
-		};
-
-
-		const targetOnly = (el, event) => {
-			let findtarget = event.target;
-			let elTagName;
-			//테그네임과 클레스명이 모두 같을 때
-			//클레스명만 같을 때
-			el.length == 1 ?
-				elTagName = el.tagName :
-				elTagName = el[0].tagName;
-
-			if (elTagName == findtarget.tagName) {
-				return findtarget
-			}
-			while (!(elTagName == findtarget.tagName)) {
-				// console.log(findtarget.tagName)
-				findtarget = findtarget.parentElement;
-			}
-			return findtarget;
-		}
-
-		const addEvent = (el, eventName, f) => {
-			let eventDelegation = listBoxFinder(el);
-			eventDelegation.addEventListener(eventName, (event) => {
-				f(targetOnly(el, event));
-			});
-		}
-
-		// addEvent(list, 'click', toggleClass)
+		// const list = qs('li');
 		// addEvent(list, 'click', cleanSelfToggleClass)
-		// addEvent(list, 'click', cleanToggleClass)
 
-		const thisIndex = (el, event) => {
-			console.log(el)
-			let target = el; //누른 타겟
-			let targetParent = target.parentElement; //누른 타겟의 부모요소
-			target.classList.add('clickChecker-maker'); //누른 타겟 마킹
-			let isTargetList = targetParent.children; //부모요소의 자식요소 콜렉션
-			let isTarget = isTargetList[0]; //첫번쨰 인덱스 자식요소 셋팅
-			console.log(isTargetList)
-			let result; //결과값담을 변수
-			let index = 0; //초기 검사 인덱스
-			for (const el of isTargetList) {
-				//마킹한 클레스 확인
-				if (el.classList.contains('clickChecker-maker')) { //마킹한 클레스인경우 현제 인덱스 저장
-					result = index;
-					target.classList.remove('clickChecker-maker') //마킹 클레스 제거
-					return result; //결과값 리턴
-				} else {
-					isTarget = isTargetList.nextelementsibling; //아닌경우 타겟은 다음 인덱스로 변경
-					index = index + 1; //아닌경우 타겟은 다음 인덱스로 변경
-				}
-			}
-			return result
-			console.log(result)
-		}
-
-		const hasOnCalssIndex = (el, event) => {
-			console.log(el)
-			let target = el; //누른 타겟
-			let targetParent = target.parentElement; //누른 타겟의 부모요소
-			let isTargetList = targetParent.children; //부모요소의 자식요소 콜렉션
-			let isTarget = isTargetList[0]; //첫번쨰 인덱스 자식요소 셋팅
-			console.log(isTargetList)
-			let result; //결과값담을 변수
-			let index = 0; //초기 검사 인덱스
-			for (const el of isTargetList) {
-				//마킹한 클레스 확인
-				if (el.classList.contains('on')) { //마킹한 클레스인경우 현제 인덱스 저장
-					result = index;
-					return result; //결과값 리턴
-				} else {
-					isTarget = isTargetList.nextelementsibling; //아닌경우 타겟은 다음 인덱스로 변경
-					index = index + 1; //아닌경우 타겟은 다음 인덱스로 변경
-				}
-			}
-			return result
-			console.log(result)
-		}
+		// const test11 = new ScrollEvent('new');
+		// test11.pushQue()
+		// console.log(test11)
+		ScrollEventMaker('s0', '.scroll0', addClass)
+		// ScrollEventMaker('s1', '.scroll1', addClass)
+		// ScrollEventMaker('s2', '.scroll2', addClass)
+		// ScrollEventMaker('s3', '.scroll3', addClass)
+		console.log(scrollQue)
+		console.log(
+			qs('.scroll0').offsetTop
+		)
 
 
-		const docmentScrollTop = (el, f, className = false) => {
-			window.addEventListener('scroll', () => {
-				let currentScroll = scrollPercent;
-				if (currentScroll == 0) {
-					if (className) {
-						f(el, className)
-					}
-					f(el)
-				}
-			})
-		}
+		// changeEl(qs('h2'), 'h4');
 
-
-		const docmentScrollBottom = (el, f, className = false) => {
-			window.addEventListener('scroll', () => {
-				// let scrollHeight = qs('body').getBoundingClientRect.top
-				let currentScroll = scrollPercent;
-				if (currentScroll <= 100) {
-					if (className) {
-						f(el, className)
-					}
-					f(el)
-				}
-			})
-		}
-
-		window.addEventListener('scroll', (event) => {
-			let currentScroll = window.scrollY;
-			let height = (qs('html').scrollHeight) - (window.innerHeight)
-			let percent = ((currentScroll / height) * 100);
-			let roundPercent = Math.round(percent);
-			scrollPercent = percent;
-			roundPercent == 0 ?
-				addClass(qs('body'), 'scorll-top') : removeClass(qs('body'), 'scorll-top');
-			roundPercent == 100 ?
-				addClass(qs('body'), 'scorll-bottom') : removeClass(qs('body'), 'scorll-bottom');
-		})
-
-
-
-		//클릭하면 해당 클레스에 addclass;
-		const findClass = (el) => {
-			res = el.getAttribute('class');
-			return res;
-		};
-		const findId = (el) => {
-			res = el.getAttribute('id');
-			return res;
-		};
-
-		const changeEl = (nowEl, changeEl) => {
-			console.log(nowEl)
-			let CreatEl = createEl(changeEl);
-			let FindClass = findClass(nowEl);
-			let FindClassArry = FindClass.split(' ')
-			let FindId = findId(nowEl);
-			let inner = nowEl.innerHTML;
-			console.log(inner)
-			CreatEl.innerHTML = inner;
-			let parentEl = nowEl.parentElement;
-			if (1 < FindClassArry.length) {
-				for (let i = 0; i < FindClassArry.length; i++) {
-					CreatEl.classList.add(`${FindClassArry[i]}`);
-				};
-			};
-			if (FindId) {
-				CreatEl.setAttribute('id', FindId)
-			};
-			parentEl.insertBefore(CreatEl, nowEl)
-			nowEl.parentElement.removeChild(nowEl);
-			return CreatEl
-		};
-		changeEl(qs('h2'), 'h4');
-
-		let togglessss = () => toggleClass(qs('strong'));
-		let interval = setInterval(togglessss, 100);
-		clearInterval(interval)
+		// let togglessss = () => toggleClass(qs('strong'));
+		// let interval = setInterval(togglessss, 100);
+		// clearInterval(interval)
 
 		// const clickedIndexElementAddClass =
 		//클릭한 ul
