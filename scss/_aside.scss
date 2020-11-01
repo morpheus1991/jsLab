@@ -1,0 +1,42 @@
+.body-wrapper {
+  display: flex;
+  background: rgb(82, 82, 82);
+}
+#aside {
+  display: flex;
+  width: 20%;
+  height: 100%;
+  max-width: 140px;
+  flex-wrap: wrap;
+}
+.aside-inner {
+  position: fixed;
+}
+.aside-contact-area {
+  width: 140px;
+  height: 60px;
+  background: yellowgreen;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gnb {
+  > ul {
+    border-top: 1px solid #e5e5e5;
+    > li {
+      border: 1px solid #e5e5e5;
+      border-top: 0;
+      min-width: 140px;
+      &:nth-child(odd) {
+        // background: rgb(255, 237, 237);
+      }
+      a {
+        padding: 15px 8px;
+        font-size: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+}

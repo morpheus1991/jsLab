@@ -1,0 +1,64 @@
+#contents-outer {
+  width: 80%;
+}
+h2 {
+  width: 100%;
+  text-align: center;
+  padding: 50px 20px 0 20px;
+  font-size: 40px;
+  color: #fff;
+}
+.contents-inner {
+  padding: 40px;
+}
+
+.code-info-list {
+  .item {
+    .title-area {
+      font-size: 30px;
+      padding: 8px 16px;
+      background: rgb(36, 36, 36);
+      color: yellow;
+      display: flex;
+      align-items: center;
+      .title {
+        margin-right: auto;
+      }
+    }
+    .sub-title {
+      font-size: 16px;
+      padding: 8px 0 8px 16px;
+      background: rgb(36, 36, 36);
+      text-align: right;
+    }
+    .disc-text {
+      background: yellowgreen;
+      padding: 8px;
+      color: rgb(36, 36, 36);
+      font-size: 16px;
+      & + .disc-text {
+        margin-left: 10px;
+      }
+    }
+    .code-area {
+      background: black;
+      padding: 16px 16px;
+      color: #fff;
+    }
+    .disc-text-area {
+      background: rgb(36, 36, 36);
+      color: yellow;
+      padding: 16px 16px;
+      line-height: 1.5;
+      .disc-text {
+        color: #000;
+        padding: 4px;
+        margin-top: 20px;
+        display: block;
+      }
+    }
+    & + .item {
+      margin-top: 40px;
+    }
+  }
+}

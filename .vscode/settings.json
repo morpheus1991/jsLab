@@ -4,26 +4,26 @@
 	"editor.insertSpaces": false,
 	"editor.detectIndentation": false,
 	"editor.formatOnSave": true,
-
 	"[scss]": {
 		"editor.tabSize": 2,
 		"editor.insertSpaces": true,
 		"editor.detectIndentation": true,
 		"editor.formatOnSave": true,
 	},
-		"[javascript]": {
+	"[javascript]": {
 		"editor.tabSize": 2,
 		"editor.insertSpaces": true,
 		"editor.detectIndentation": true,
 		"editor.formatOnSave": true,
 	},
-
-	"liveSassCompile.settings.formats": [{
-		"format": "expanded",
-		"extensionName": ".css",
-		"savePath": "~/css/"
-		// ~ 를 기준으로 생성됨
-	}],
+	"liveSassCompile.settings.formats": [
+		{
+			"format": "expanded",
+			"extensionName": ".css",
+			"savePath": "~/../css/"
+			// ~ 를 기준으로 생성됨
+		}
+	],
 	"liveSassCompile.settings.excludeList": [
 		//라이브사스 컴파일 제외목록임
 		"**/node_modules/**",

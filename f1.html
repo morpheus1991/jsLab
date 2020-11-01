@@ -1,97 +1,308 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <style></style>
+  </head>
 
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
-	<link rel="stylesheet" href="/css/style.css">
-	<style>
+  <body>
+    <div class="wrapper">
+      <header id="header">
+        <h1>Trantper js lap</h1>
+      </header>
+      <div class="body-wrapper">
+        <aside id="aside">
+          <div class="aside-inner">
+            <div class="aside-contact-area">
+              <a href="#">contact info</a>
+            </div>
+            <nav class="gnb">
+              <ul>
+                <li><a href="#">메뉴1</a></li>
+                <li><a href="#">메뉴2</a></li>
+                <li><a href="#">메뉴3</a></li>
+                <li><a href="#">매뉴4</a></li>
+              </ul>
+            </nav>
+          </div>
+        </aside>
+        <article id="contents-outer">
+          <h2>BasicFunction</h2>
+          <div class="contents-inner">
+            <div class="code-info-list">
+              <dl class="item">
+                <dt class="title-area">
+                  <strong class="title">qs()</strong>
+                  <span class="disc-text">querySelector</span
+                  ><span class="disc-text">querySelectorAll</span>
+                </dt>
+                <dd class="code-area">
+                  <code>
+                    <pre>
+let qs = (qsValue) => {
+	let that = document.querySelectorAll(qsValue);
+	let res;
+	that.length == 1 ?
+		res = document.querySelector(qsValue) :
+		res = that;
+	return res
+};
+									</pre
+                    >
+                  </code>
+                </dd>
+                <dd class="disc-text-area">
+                  선택자로 선택한 값을 반환합니다.
+                  <span class="disc-text">qs('targetEl')</span>
+                </dd>
+              </dl>
+              <dl class="item">
+                <dt class="title-area">
+                  <strong class="title">createEl()</strong>
+                  <span class="disc-text">createElement</span>
+                </dt>
+                <dd class="code-area">
+                  <code>
+                    <pre>
+let createEl = (elValue) => {
+	res = document.createElement(elValue);
+	return res;
+}
+									</pre
+                    >
+                  </code>
+                </dd>
+                <dd class="disc-text-area">
+                  엘리먼트를 생성해서 반환합니다.
+                  <span class="disc-text">createEl('targetEl')</span>
+                </dd>
+              </dl>
+              <dl class="item">
+                <dt class="title-area">
+                  <strong class="title">looper()</strong>
+                  <span class="disc-text">loop(for)</span>
+                </dt>
+                <dd class="code-area">
+                  <code>
+                    <pre>
+const looper = (el, f) => {
+	for (let i = 0; i < el.length; i++) {
+		f(el[i])
+	};
+};
+									</pre
+                    >
+                  </code>
+                </dd>
+                <dd class="disc-text-area">
+                  <p>el과f를 받아옵니다.</p>
+                  <p>el을 순회하면서 f(함수)를 적용합니다.</p>
+                  <p><span class="disc-text">looper(qs('targetEl'),f)</span></p>
+                </dd>
+              </dl>
 
-	</style>
-</head>
+              <dl class="item">
+                <dt class="title-area">
+                  <strong class="title">changeEl()</strong>
+                  <span class="disc-text">ex): before(p), after(li)</span>
+                </dt>
+                <dd class="code-area">
+                  <code>
+                    <pre>
+const changeEl = (nowEl, changeEl) => {
+	let CreatEl = createEl(changeEl);
+	let FindClass = findClass(nowEl);
+	let FindClassArry = FindClass.split(' ')
+	let FindId = findId(nowEl);
+	let inner = nowEl.innerHTML;
+	CreatEl.innerHTML = inner;
+	let parentEl = nowEl.parentElement;
+	if (1 < FindClassArry.length) {
+		for (let i = 0; i < FindClassArry.length; i++) {
+			CreatEl.classList.add(`${FindClassArry[i]}`);
+		};
+	};
+	if (FindId) {
+		CreatEl.setAttribute('id', FindId)
+	};
+	parentEl.insertBefore(CreatEl, nowEl)
+	nowEl.parentElement.removeChild(nowEl);
+	return CreatEl
+};
+									</pre
+                    >
+                  </code>
+                </dd>
+                <dd class="disc-text-area">
+                  <p>
+                    변경시킬 대상 el과 어떤 태그로 바뀌어야하는지 인자로
+                    입력합니다.
+                  </p>
+                  <p>
+                    변경될 태그를 만들고 class,id,내부 구성요소를
+                    전이시켜줍니다. 전이가 완료된 이후 대상 엘리먼트는
+                    삭제됩니다. 동일한 엘리먼트 위치를 같습니다.
+                  </p>
+                  <p>
+                    <span class="disc-text">changeEl(qs('targetEl'),'li')</span>
+                  </p>
+                </dd>
+              </dl>
+              <dl class="item">
+                <dt class="title-area">
+                  <strong class="title">targetOnly()</strong>
+                  <span class="disc-text">눌려진, 지정된 el을 반환</span>
+                </dt>
+                <dd class="code-area">
+                  <code>
+                    <pre>
+const targetOnly = (el, event) => {
+	let findtarget = event.target;
+	let elTagName;
+	//테그네임과 클레스명이 모두 같을 때
+	//클레스명만 같을 때
+	el.length == 1 ?
+		elTagName = el.tagName :
+		elTagName = el[0].tagName;
+	if (findtarget.classList.contains('list-box')) {
+		return
+	}
+	if (elTagName == findtarget.tagName) {
+		return findtarget
+	}
+	if (findtarget.tagName) {
+		while (!(elTagName == findtarget.tagName)) {
+			findtarget = findtarget.parentElement;
+		}
+	}
+	return findtarget;
+}
+									</pre
+                    >
+                  </code>
+                </dd>
+                <dd class="disc-text-area">
+                  <p>눌려져야하는 대상 el, 이벤트의 종류(eventName)</p>
+                  <p>
+                    눌려져야하는 el을 받고,눌린대상과 비교하여 일치시
+                    반환합니다.
+                  </p>
+                  <p>
+                    <span class="disc-text"
+                      >이벤트 위임함수 내부에서 사용됨</span
+                    >
+                  </p>
+                </dd>
+              </dl>
+              <dl class="item">
+                <dt class="title-area">
+                  <strong class="title">addEvent()</strong>
+                  <span class="disc-text">ex): before(p), after(li)</span>
+                </dt>
+                <dd class="code-area">
+                  <code>
+                    <pre>
+const addEvent = (el, eventName, f) => {
+	let eventDelegation = listBoxFinder(el);
+	eventDelegation.addEventListener(eventName, (event) => {
+		f(targetOnly(el, event));
+	});
+}
+									</pre
+                    >
+                  </code>
+                </dd>
+                <dd class="disc-text-area">
+                  <p>
+                    이벤트를 적용시킬 el, 이벤트의 종류(eventName), 적용할 함수
+                  </p>
+                  <p>
+                    el의 부모인 list-box를 반환받고, 받환받은 list-box에
+                    이벤트를 위임합니다.
+                  </p>
+                  <p>
+                    <span class="disc-text"
+                      >addEvent(qs('.list'),'click',toggleClass)</span
+                    >
+                  </p>
+                </dd>
+              </dl>
+              <dl class="item">
+                <dt class="title-area">
+                  <strong class="title">listBoxFinder()</strong>
+                  <span class="disc-text"
+                    >el을 기준으로 위로 올라가 list-box를 찾아 반환합니다</span
+                  >
+                </dt>
+                <dd class="code-area">
+                  <code>
+                    <pre>
+const listBoxFinder = (el) => {
+	let identiti = null;
+	let parent = el.parentElement;
+	if (1 < el.length) {
+		identiti = el[0].tagName; //인접한 형제가 있으므로 태그네임이 구분자
+		parent = el[0].parentElement; //부모요소를 따둠, 앞으로 바뀔 예정
+	}
+	while (!parent.classList.contains('list-box')) {
+		parent = parent.parentElement;
+		if (parent.tagName == 'BODY') {
+			return;
+		};
+	};
+	return parent;
+};
+									</pre
+                    >
+                  </code>
+                </dd>
+                <dd class="disc-text-area">
+                  <p>이벤트 위임을 위한 함숭비니다.el을 받아옵니다.</p>
+                  <p>
+                    el을 기준으로 위로, 위로 올라가며 리스트의
+                    부모요소('.list-box')를 찾아 반환합니다.
+                  </p>
+                  <p>
+                    <span class="disc-text"
+                      >addEvent(listBoxFinder('.list-item'),'click',toggleClass)</span
+                    >
+                  </p>
+                </dd>
+              </dl>
+            </div>
+          </div>
+        </article>
+      </div>
+      <footer id="footer"></footer>
+    </div>
+    <script src="/devState.js"></script>
+    <script src="/domFxBasic.js"></script>
+    <script>
+      // const list = qs('li');
+      // addEvent(list, 'click', cleanSelfToggleClass)
 
-<body>
+      // const test11 = new ScrollEvent('new');
+      // test11.pushQue()
+      // console.log(test11)
+      ScrollEventMaker("s0", ".scroll10", addClass);
+      ScrollEventMaker("s1", ".scroll1", addClass);
+      ScrollEventMaker("s2", ".scroll2", addClass);
+      ScrollEventMaker("s3", ".scroll3", addClass);
+      ScrollEventMaker("s3", ".scroll0", addClass);
+      console.log(scrollQue);
+      console.log(qs(".scroll0").offsetTop);
 
-	<ul class='list-box'>
-		<li><a href="#">1aa</a></li>
-		<li><a href="#">2bb</a></li>
-		<li><a href="#">3cc</a></li>
-		<li><a href="#">4dd</a></li>
-		<li><a href="#">5ee</a></li>
-		<li class="scroll3"><a href="#">6ss</a></li>
-		<li><a href="#">7aa</a></li>
-		<li><a href="#">8rr</a></li>
-		<li><a href="#">1aa</a></li>
-		<li><a href="#">2bb</a></li>
-		<li><a href="#">3cc</a></li>
-		<li><a href="#">4dd</a></li>
-		<li><a href="#">5ee</a></li>
-		<li><a href="#">6ss</a></li>
-		<li class="scroll1"><a href="#">7aa</a></li>
-		<li><a href="#">8rr</a></li>
-		<li><a href="#">1aa</a></li>
-		<li><a href="#">2bb</a></li>
-		<li><a href="#">3cc</a></li>
-		<li><a href="#">4dd</a></li>
-		<li><a href="#">5ee</a></li>
-		<li><a href="#">6ss</a></li>
-		<li><a href="#">7aa</a></li>
-		<li><a href="#">8rr</a></li>
-		<li><a href="#">1aa</a></li>
-		<li><a href="#">2bb</a></li>
-		<li><a href="#">3cc</a></li>
-		<li><a href="#">4dd</a></li>
-		<li><a href="#">5ee</a></li>
-		<li class="scroll2"><a href="#">6ss</a></li>
-		<li><a href="#">7aa</a></li>
-		<li><a href="#">8rr</a></li>
-		<li><a href="#">1aa</a></li>
-		<li><a href="#">2bb</a></li>
-		<li><a href="#">3cc</a></li>
-		<li class="scroll0"><a href="#">6ss</a></li>
-		<li><a href="#">5ee</a></li>
-		<li><a href="#">6ss</a></li>
-		<li><a href="#">7aa</a></li>
-		<li><a href="#">8rr</a></li>
-	</ul>
-	<strong>ddd</strong>
+      // changeEl(qs('h2'), 'h4');
 
-	<h2 id="id111" class="c1 c2 c3 c4">
-		<div>
-			<span>sa</span>
-		</div>
-	</h2>
+      // let togglessss = () => toggleClass(qs('strong'));
+      // let interval = setInterval(togglessss, 100);
+      // clearInterval(interval)
 
-	<p class="delete-text">지워졌습니다.</p>
-	<script src="/devState.js"></script>
-	<script script src="/domFxBasic.js"></script>
-	<script>
-		// const list = qs('li');
-		// addEvent(list, 'click', cleanSelfToggleClass)
-
-		// const test11 = new ScrollEvent('new');
-		// test11.pushQue()
-		// console.log(test11)
-		ScrollEventMaker('s0', '.scroll0', addClass)
-		// ScrollEventMaker('s1', '.scroll1', addClass)
-		// ScrollEventMaker('s2', '.scroll2', addClass)
-		// ScrollEventMaker('s3', '.scroll3', addClass)
-		console.log(scrollQue)
-		console.log(
-			qs('.scroll0').offsetTop
-		)
-
-
-		// changeEl(qs('h2'), 'h4');
-
-		// let togglessss = () => toggleClass(qs('strong'));
-		// let interval = setInterval(togglessss, 100);
-		// clearInterval(interval)
-
-		// const clickedIndexElementAddClass =
-		//클릭한 ul
-	</script>
-</body>
-
+      // const clickedIndexElementAddClass =
+      //클릭한 ul
+    </script>
+  </body>
 </html>

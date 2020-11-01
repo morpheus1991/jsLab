@@ -23,7 +23,7 @@ window.addEventListener('scroll', (event) => {
 	roundPercent == 100 ?
 		addClass(qs('body'), 'scorll-bottom') : removeClass(qs('body'), 'scorll-bottom');
 	eventPlay()
-	scrollY = currentScroll;
+	scrollY = currentScroll + (window.innerHeight / 2);
 	console.log(scrollY)
 });
 
@@ -41,17 +41,17 @@ class ScrollEvent {
 		scrollQue.push(this);
 	}
 	play() {
-		console.log(this.element)
-		console.log(`렉트값${this.rect}`)
+		console.log(`플레이 실행 됨${this.element}`)
+		console.log(`렉트값${this.rect}.`)
 		this.optionFunction(this.element)
 	}
 }
 
 const eventPlay = () => {
-	for (const that of scrollQue) {
-		console.log(`${that.lect}렉트`)
-		if (that.rect < scrollY) {
-			that.play()
+	for (let i = 0; i < scrollQue.length; i++) {
+		console.log(`${scrollQue[i].rect}렉트`)
+		if (scrollQue[i].rect < scrollY) {
+			scrollQue[i].play()
 		}
 	}
 }
